@@ -9,7 +9,7 @@ import { ProductModule } from './products/product.module';
       envFilePath: '.env'
     }),
     MongooseModule.forRoot(
-      'mongodb://localhost:27017/nest_services',
+      `mongodb://${process.env.MONGODB_HOST}:${process.env.MONGODB_PORT}/${process.env.MONGODB_DB}`,
       {
         autoCreate: true,
       }

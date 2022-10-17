@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Product } from './products/product.entity';
 import { ProductModule } from './products/product.module';
@@ -7,18 +7,18 @@ import { ProductModule } from './products/product.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env'
+      envFilePath: '.env',
     }),
     TypeOrmModule.forRoot({
-        type: 'postgres',
-        host: 'localhost',
-        port: 5432,
-        username: 'postgres',
-        password: 'admin',
-        database: 'nest_services',
-        entities: [Product],
-        synchronize: true,
-        autoLoadEntities: true
+      type: 'postgres',
+      host: process.env.POSTGRES_HOST,
+      port: Number(process.env.POSTGRES_PORT),
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DB,
+      entities: [Product],
+      synchronize: true,
+      autoLoadEntities: true,
     }),
     ProductModule
   ],

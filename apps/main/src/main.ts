@@ -4,15 +4,19 @@ import { AppModule } from "./app.module";
 
 async function bootstrap() {
 
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.MAIN_PORT || 3000;
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api');
+
+  const rmq_host = process.env.RABBITMQ_HOST;
+  const rmq_port = process.env.RABBITMQ_PORT;
+  const rmq_queue = process.env.RABBITMQ_QUEUE_NAME;
 
   const microservice = app.connectMicroservice( {
     transport: Transport.RMQ,
     options: {
-        urls: ['amqp://localhost:5672'],
-        queue: 'nest_services',
+        urls: [`amqp://${rmq_host}:${rmq_port}`],
+        queue: rmq_queue,
         queueOptions: {
             durable: false
         }

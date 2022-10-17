@@ -16,8 +16,8 @@ import { ProductService } from "./product.service";
         name: 'PRODUCT_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls: ['amqp://localhost:5672'],
-          queue: 'nest_services',
+          urls: [`amqp://${process.env.RABBITMQ_HOST}:${process.env.RABBITMQ_PORT}`],
+          queue: process.env.RABBITMQ_QUEUE_NAME,
           queueOptions: {
             durable: false
           }

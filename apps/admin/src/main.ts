@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
 
-  const PORT = process.env.PORT || 3001;
+  const PORT = process.env.ADMIN_PORT || 3001;
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api');
   
